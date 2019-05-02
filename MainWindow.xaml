@@ -1,0 +1,362 @@
+﻿<Window x:Class="Snake.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Snake"
+        mc:Ignorable="d"
+        Name="MainW"
+        KeyDown="Tail_KeyDown"
+        
+        Title="Snake" MinHeight="490" Height="490" Width="465" MinWidth="465" ResizeMode="NoResize" >
+    <Grid>
+        <Canvas Visibility="Hidden" x:Name="canvas" Background="Gray">
+        </Canvas>
+        <StackPanel Visibility="Visible" x:Name="MainMenu" Background="AntiqueWhite">
+            <TextBlock
+                FontSize="20" 
+                TextAlignment="Center" 
+                FontFamily="Arial" 
+                Background="Gray">Main Menu</TextBlock>
+            <Button 
+                Name ="playButton"
+                Content="Play"
+                Click="playButton_click"
+                Width="200" 
+                Margin="0,100,0,0"/>
+            <Button 
+                Name ="settingsButton" 
+                Content="Settings" 
+                Click="SettingsButton_Click"
+                Width="200" 
+                Margin="0,10,0,0"/>
+            <Button
+                Name ="exitButton" 
+                Content="Exit" 
+                Click="ExitButton_Click" 
+                Width="200" 
+                Margin="0,10,0,0"/>
+        </StackPanel>
+        <StackPanel Visibility="Hidden" x:Name="Settings" Margin="0,0,-0.4,-0.2">
+            <TextBlock
+                FontSize="20"
+                TextAlignment="Center"
+                FontFamily="Arial" 
+                Background="Gray">Settings
+            </TextBlock>
+            <TextBlock
+                FontSize="20"
+                TextAlignment="Center"
+                FontFamily="Arial"
+                Background="RoyalBlue">Screen
+            </TextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                FontSize="20"
+                TextAlignment="Center"
+                FontFamily="Arial"
+                Width="100"
+                Grid.Column="0"
+                Background="RoyalBlue">Size
+                </TextBlock>
+                <Slider
+                Name="sizeSlider"
+                Value="0"
+                Minimum="0"
+                Maximum="100"
+                Grid.Column="1"
+                >
+                </Slider>
+            </Grid>
+            <TextBlock
+                FontSize="20"
+                TextAlignment="Center"
+                FontFamily="Arial"
+                Background="Orange">Snake
+            </TextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                FontSize="20"
+                TextAlignment="Center"
+                FontFamily="Arial"
+                Width="100"
+                Grid.Row="0"
+                Background="Orange">Speed
+                </TextBlock>
+                <Slider
+                Name="speedSlider"
+                Value="3"
+                Minimum="3"
+                Grid.Column="1"
+                Maximum="13"
+                TickFrequency="1"
+                TickPlacement="BottomRight"
+                IsSnapToTickEnabled="True"
+                >
+                </Slider>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                FontSize="20"
+                TextAlignment="Center"
+                FontFamily="Arial"
+                MinWidth="100"
+                Grid.Column="0"
+                Background="Orange">Color
+                </TextBlock>
+                <ComboBox Name="colorSnake" Grid.Column="1" SelectedIndex="0">
+                    <TextBlock>
+                    <Image
+                    Source="pack://application:,,,/Resources/tail.jpg"
+                    Width="20"/>
+                    Black
+                    </TextBlock>
+                    <TextBlock>
+                    <Image
+                    Source="pack://application:,,,/Resources/tail1.jpg"
+                    Width="20"/>
+                    Blue
+                    </TextBlock>
+                    <TextBlock>
+                    <Image
+                    Source="pack://application:,,,/Resources/tail2.jpg"
+                    Width="20"/>
+                    Yellow
+                    </TextBlock>
+                    <TextBlock>
+                    <Image
+                    Source="pack://application:,,,/Resources/tail3.jpg"
+                    Width="20"/>
+                    Green
+                    </TextBlock>
+                    <TextBlock>
+                    <Image
+                    Source="pack://application:,,,/Resources/tail4.jpg"
+                    Width="20"/>
+                    Purple
+                    </TextBlock>
+                </ComboBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                FontSize="20"
+                TextAlignment="Center"
+                FontFamily="Arial"
+                MinWidth="100"
+                Grid.Column="0"
+                Background="Orange">Length
+                </TextBlock>
+                <Slider
+                Name="lenghtSlider"
+                Value="0"
+                Minimum="0"
+                Grid.Column="1"
+                Maximum="5"
+                TickFrequency="1"
+                TickPlacement="BottomRight"
+                IsSnapToTickEnabled="True">
+                </Slider>
+            </Grid>
+            <TextBlock
+                FontSize="20"
+                TextAlignment="Center"
+                FontFamily="Arial"
+                Background="SeaGreen"
+                Text="Map"
+                />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock 
+                    FontSize="20"
+                    TextAlignment="Center"
+                    FontFamily="Arial"
+                    Background="SeaGreen"
+                    Grid.Column="0"
+                    MinWidth="100">
+                    Color
+                </TextBlock>
+                <ComboBox Name="colorMap" Grid.Column="1" SelectedIndex="0">
+                    <TextBlock>
+                    <Rectangle Width="20" Height="20" Fill="Gray">
+                    </Rectangle>
+                    Gray
+                    </TextBlock>
+                    <TextBlock>
+                    <Rectangle Width="20" Height="20" Fill="DarkCyan">
+                    </Rectangle>
+                    DarkCyan
+                    </TextBlock>
+                    <TextBlock>
+                    <Rectangle Width="20" Height="20" Fill="DarkRed">
+                    </Rectangle>
+                    DarkRed
+                    </TextBlock>
+                    <TextBlock>
+                    <Rectangle Width="20" Height="20" Fill="DarkGreen">
+                    </Rectangle>
+                    DarkGreen
+                    </TextBlock>
+                    <TextBlock>
+                    <Rectangle Width="20" Height="20" Fill="DarkMagenta">
+                    </Rectangle>
+                    DarkMagenta
+                    </TextBlock>
+                </ComboBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock 
+                    FontSize="20"
+                    TextAlignment="Center"
+                    FontFamily="Arial"
+                    Background="SeaGreen"
+                    Grid.Column="0"
+                    MinWidth="100">
+                    Level
+                </TextBlock>
+                <ComboBox Name="levelMap" Grid.Column="1" SelectedIndex="0">
+                    <TextBlock>
+                       Default level
+                    </TextBlock>
+                    <TextBlock>
+                        Without walls
+                    </TextBlock>
+                    <TextBlock>
+                        Custom level
+                    </TextBlock>
+                </ComboBox>
+                <Button Name="buttonCreateLevel"
+                        Click="ButtonCreateLevel_Click"
+                        Grid.Column="2">
+                    Create custom level
+                </Button>
+            </Grid>
+            <Button 
+                Content="Exit" 
+                Name="exitButtonSettings" 
+                Click="ExitButtonSettings_Click"/>
+        </StackPanel>
+        <Canvas Visibility="Hidden" x:Name="createLevelCanvas" 
+                Background="Gray">
+            <Menu VerticalAlignment="Top" Panel.ZIndex="5">
+                <MenuItem Header="Add">
+                    <MenuItem Name="createWall" Header="WallSegment" Click="CreateWall_Click">
+
+                    </MenuItem>
+                    <MenuItem Name="respawnCreateLevel"
+                              Header="Player Respawn"
+                              Click="RespawnCreateLevel_Click">
+
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Name="delWall" Header="Delete"
+                          Click="DelWall_Click">
+                </MenuItem>
+                <MenuItem Name="applyCreateLevel" 
+                          Header="Apply"
+                          Click="ApplyCreateLevel_Click">
+                </MenuItem>
+            </Menu>
+        </Canvas>
+        <StackPanel x:Name="PauseMenu" Visibility="Hidden">
+            <Button 
+                Content="Continue" 
+                Name="continueButton"
+                Click="ContinueButton_Click"
+                Width="200"
+                Margin="0,100,0,0"/>
+            <Button 
+                Content="Exit" 
+                Name="exitPauseButton"
+                Click="ExitPauseButton_Click"
+                Width="200"/>
+        </StackPanel>
+        <StackPanel x:Name="GameOverMenu" Visibility="Hidden">
+            <TextBlock
+                Name="scoreEnd"
+                FontSize="20" 
+                TextAlignment="Center" 
+                FontFamily="Arial"
+                Background="White">
+            </TextBlock>
+            <TextBlock
+                Name="recordEnd"
+                FontSize="20" 
+                TextAlignment="Center" 
+                FontFamily="Arial" 
+                Background="White">
+            </TextBlock>
+            <TextBlock
+                Name="commentGameOver"
+                FontSize="20" 
+                TextAlignment="Center" 
+                FontFamily="Arial" 
+                Background="White">
+            </TextBlock>
+            <Button
+                Name="newGameGameOver"
+                Content="New Game"
+                Margin="0,100,0,0"
+                Width="200"
+                Click="playButton_click"
+                />
+            <Button
+                Name="exitGameOver"
+                Content="Exit to Main Menu"
+                Width="200"
+                Click="ExitGameOver_Click"/>
+        </StackPanel>
+        <StackPanel x:Name="oneDeathMenu" Visibility="Hidden">
+            <TextBlock
+                Name="countOfLives"
+                FontSize="20" 
+                TextAlignment="Center" 
+                FontFamily="Arial"
+                Background="White">
+            </TextBlock>
+            <TextBlock
+                Name="oneDeathMenuScore"
+                FontSize="20" 
+                TextAlignment="Center" 
+                FontFamily="Arial" 
+                Background="White">
+            </TextBlock>
+            <Button
+                Name="oneDeathMenuContinue"
+                Content="Continue"
+                Margin="0,100,0,0"
+                Width="200"
+                Click="playButton_click"
+                />
+            <Button
+                Name="oneDeathMenuExit"
+                Content="Exit to Main Menu"
+                Width="200"
+                Click="ExitGameOver_Click"/>
+        </StackPanel>
+    </Grid>
+
+</Window>
